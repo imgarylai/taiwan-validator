@@ -38,7 +38,7 @@ export function validateBusinessNumber(number: string): ValidationResult {
   // 計算加權總和
   let sum = 0;
   for (let i = 0; i < 8; i++) {
-    let product = digits[i] * weights[i];
+    let product = digits[i]! * weights[i]!;
 
     // 如果乘積為兩位數，將十位數和個位數相加
     if (product >= 10) {
@@ -50,7 +50,7 @@ export function validateBusinessNumber(number: string): ValidationResult {
 
   // 特殊情況：第7位數字為7時
   // 如果第7位數字為7且總和除以10的餘數為1，也視為有效
-  const isValid = sum % 10 === 0 || (digits[6] === 7 && sum % 10 === 1);
+  const isValid = sum % 10 === 0 || (digits[6]! === 7 && sum % 10 === 1);
 
   return {
     isValid,

@@ -3,7 +3,7 @@
  */
 export interface ValidationResult {
   isValid: boolean;
-  message?: string;
+  message?: string | undefined;
 }
 
 /**

@@ -45,10 +45,10 @@ function validateOldFormat(id: string): boolean {
     return false;
   }
 
-  const letter = id[0];
+  const letter = id[0] as string;
   const numbers = id.slice(1);
 
-  const letterValue = LETTER_MAPPING[letter];
+  const letterValue = LETTER_MAPPING[letter] as number;
 
   // 計算檢查碼
   const d1 = Math.floor(letterValue / 10);
@@ -58,7 +58,7 @@ function validateOldFormat(id: string): boolean {
   const digits = [d1, d2, ...numbers.split("").map(Number)];
 
   const sum = digits.reduce(
-    (acc, digit, index) => acc + digit * weights[index],
+    (acc, digit, index) => acc + digit * weights[index]!,
     0,
   );
 
@@ -78,12 +78,12 @@ function validateNewFormat(id: string): boolean {
     return false;
   }
 
-  const firstLetter = id[0];
-  const secondLetter = id[1];
+  const firstLetter = id[0] as string;
+  const secondLetter = id[1] as string;
   const numbers = id.slice(2);
 
-  const firstLetterValue = LETTER_MAPPING[firstLetter];
-  const secondLetterValue = LETTER_MAPPING[secondLetter];
+  const firstLetterValue = LETTER_MAPPING[firstLetter] as number;
+  const secondLetterValue = LETTER_MAPPING[secondLetter] as number;
 
   // 計算新式格式的檢查碼
   const d1 = Math.floor(firstLetterValue / 10);
@@ -95,7 +95,7 @@ function validateNewFormat(id: string): boolean {
   const digits = [d1, d2, d3, d4, ...numbers.split("").map(Number)];
 
   const sum = digits.reduce(
-    (acc, digit, index) => acc + digit * weights[index],
+    (acc, digit, index) => acc + digit * weights[index]!,
     0,
   );
 
