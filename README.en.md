@@ -16,6 +16,7 @@ A comprehensive TypeScript validator for Taiwan identification numbers and codes
 - ✅ Citizen Digital Certificate validation (自然人憑證)
 - ✅ e-Invoice Mobile Barcode validation (電子發票手機條碼)
 - ✅ e-Invoice Donation Code validation (電子發票捐贈碼)
+- ✅ License Plate Number validation (車牌號碼) - Supports cars, motorcycles, electric vehicles, and more
 - 📘 Full TypeScript support with type definitions
 - 🧪 Thoroughly tested with 100% coverage
 - 📦 Tree-shakeable ESM and CommonJS support
@@ -38,6 +39,7 @@ import {
   validateCitizenCertificate,
   validateEInvoiceMobileBarcode,
   validateEInvoiceDonationCode,
+  validateLicensePlate,
 } from "taiwan-validator";
 
 // National ID (身分證字號)
@@ -63,6 +65,11 @@ validateEInvoiceMobileBarcode("/ABCD123"); // { isValid: true }
 
 // e-Invoice Donation Code (電子發票捐贈碼)
 validateEInvoiceDonationCode("12345"); // { isValid: true }
+
+// License Plate Number (車牌號碼)
+validateLicensePlate("ABC-1235"); // { isValid: true, plateType: 'car' }
+validateLicensePlate("EAB-1235"); // { isValid: true, plateType: 'electric-car' }
+validateLicensePlate("AB1-234"); // { isValid: true, plateType: 'motorcycle' }
 ```
 
 ## API Documentation
@@ -144,6 +151,60 @@ Validates Taiwan e-Invoice Donation Code (電子發票捐贈碼).
 validateEInvoiceDonationCode("12345");
 ```
 
+### `validateLicensePlate(plate: string, options?: { type?: LicensePlateType, detectType?: boolean }): LicensePlateValidationResult`
+
+Validates Taiwan license plate numbers, supporting multiple vehicle types.
+
+- **Supported Formats**:
+  - **New car** (`car`): 3 letters - 4 digits (e.g., `ABC-1235`)
+    - Letters I and O are not used
+    - Digit 4 is not used
+  - **Old car** (`car-old`): 1 digit + 1 letter - 4 digits (e.g., `1A-2345`)
+  - **Electric car** (`electric-car`): E + 2 letters - 4 digits (e.g., `EAB-1235`)
+    - Letters I and O are not used
+    - Digit 4 is not used
+  - **Small motorcycle** (`motorcycle-small`):
+    - 3 digits - 3 letters (e.g., `123-ABC`)
+    - 3 letters - 3 digits (e.g., `ABC-123`)
+  - **Regular motorcycle** (`motorcycle`): 2 letters + 1 digit - 3 digits (e.g., `AB1-234`)
+
+```typescript
+// Basic validation (auto-detect plate type)
+validateLicensePlate("ABC-1235");
+// { isValid: true, plateType: 'car' }
+
+// Electric car
+validateLicensePlate("EAB-1235");
+// { isValid: true, plateType: 'electric-car' }
+
+// Old car format
+validateLicensePlate("1A-2345");
+// { isValid: true, plateType: 'car-old' }
+
+// Small motorcycle
+validateLicensePlate("123-ABC");
+// { isValid: true, plateType: 'motorcycle-small' }
+
+validateLicensePlate("ABC-123");
+// { isValid: true, plateType: 'motorcycle-small' }
+
+// Regular motorcycle
+validateLicensePlate("AB1-234");
+// { isValid: true, plateType: 'motorcycle' }
+
+// Validate specific plate type
+validateLicensePlate("ABC-1235", { type: "car" });
+// { isValid: true, plateType: 'car' }
+
+// Disable type detection
+validateLicensePlate("ABC-1235", { detectType: false });
+// { isValid: true }
+
+// Handles lowercase and whitespace
+validateLicensePlate(" abc-1235 ");
+// { isValid: true, plateType: 'car' }
+```
+
 ### Return Type
 
 All validation functions return a `ValidationResult` object:
@@ -152,6 +213,19 @@ All validation functions return a `ValidationResult` object:
 interface ValidationResult {
   isValid: boolean;
   message?: string; // Error message when isValid is false
+}
+```
+
+License plate validation returns a `LicensePlateValidationResult` with additional plate type information:
+
+```typescript
+interface LicensePlateValidationResult extends ValidationResult {
+  plateType?:
+    | "car"
+    | "car-old"
+    | "electric-car"
+    | "motorcycle-small"
+    | "motorcycle";
 }
 ```
 

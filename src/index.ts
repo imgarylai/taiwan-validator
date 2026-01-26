@@ -8,6 +8,7 @@
  * - 自然人憑證
  * - 電子發票手機條碼
  * - 電子發票捐贈碼
+ * - 車牌號碼
  */
 
 export { validateNationalId } from "./validators/national-id";
@@ -17,6 +18,11 @@ export { validateMobilePhone } from "./validators/mobile-phone";
 export { validateCitizenCertificate } from "./validators/citizen-certificate";
 export { validateEInvoiceMobileBarcode } from "./validators/einvoice-mobile-barcode";
 export { validateEInvoiceDonationCode } from "./validators/einvoice-donation-code";
+export {
+  validateLicensePlate,
+  type LicensePlateType,
+  type LicensePlateValidationResult,
+} from "./validators/license-plate";
 
 export type {
   ValidationResult,
