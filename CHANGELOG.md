@@ -1,3 +1,13 @@
+# 1.0.0 (2026-01-26)
+
+### Bug Fixes
+
+- resolve TypeScript strict type checking errors for build ([94c6ede](https://github.com/imgarylai/taiwan-validator/commit/94c6edef747785ae100377dabbbe70d1c0318bd1))
+
+### Features
+
+- implement Taiwan ID validators with 100% test coverage ([02f9822](https://github.com/imgarylai/taiwan-validator/commit/02f98226a14c504b6e2d2c630a7ce60e8304c633))
+
 # [2.0.0](https://github.com/imgarylai/ts-package-starter/compare/v1.1.0...v2.0.0) (2026-01-23)
 
 - feat!: drop Node.js 20 support ([4cc0378](https://github.com/imgarylai/ts-package-starter/commit/4cc0378dc39a270f83cfabd7b473f8d1a0172708))
