@@ -1,0 +1,214 @@
+# Taiwan Validator
+
+A comprehensive TypeScript validator for Taiwan identification numbers and codes.
+
+[![CI](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml/badge.svg)](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[繁體中文](README.md)
+
+## Features
+
+- ✅ National ID validation (身分證字號) - Both old and new formats
+- ✅ Business Uniform Number validation (統一編號)
+- ✅ Resident Certificate validation (居留證號) - Both old and new formats
+- ✅ Mobile Phone Number validation (手機號碼)
+- ✅ Citizen Digital Certificate validation (自然人憑證)
+- ✅ e-Invoice Mobile Barcode validation (電子發票手機條碼)
+- ✅ e-Invoice Donation Code validation (電子發票捐贈碼)
+- 📘 Full TypeScript support with type definitions
+- 🧪 Thoroughly tested with 100% coverage
+- 📦 Tree-shakeable ESM and CommonJS support
+- 🚀 Zero dependencies
+
+## Installation
+
+```bash
+npm install taiwan-validator
+```
+
+## Usage
+
+```typescript
+import {
+  validateNationalId,
+  validateBusinessNumber,
+  validateResidentCertificate,
+  validateMobilePhone,
+  validateCitizenCertificate,
+  validateEInvoiceMobileBarcode,
+  validateEInvoiceDonationCode,
+} from "taiwan-validator";
+
+// National ID (身分證字號)
+validateNationalId("A123456789"); // { isValid: true }
+validateNationalId("AA23456786"); // { isValid: true } - New format
+
+// Business Number (統一編號)
+validateBusinessNumber("12345676"); // { isValid: true }
+
+// Resident Certificate (居留證號)
+validateResidentCertificate("A823456783"); // { isValid: true } - Old format
+validateResidentCertificate("AA23456786"); // { isValid: true } - New format
+
+// Mobile Phone (手機號碼)
+validateMobilePhone("0912345678"); // { isValid: true }
+validateMobilePhone("0912-345-678"); // { isValid: true } - With separators
+
+// Citizen Digital Certificate (自然人憑證)
+validateCitizenCertificate("AB12345678901234"); // { isValid: true }
+
+// e-Invoice Mobile Barcode (電子發票手機條碼)
+validateEInvoiceMobileBarcode("/ABCD123"); // { isValid: true }
+
+// e-Invoice Donation Code (電子發票捐贈碼)
+validateEInvoiceDonationCode("12345"); // { isValid: true }
+```
+
+## API Documentation
+
+### `validateNationalId(id: string, format?: 'old' | 'new'): ValidationResult`
+
+Validates Taiwan National ID (身分證字號).
+
+- **Old format**: 1 letter + 9 digits (e.g., `A123456789`)
+- **New format**: 2 letters + 8 digits (e.g., `AA23456786`)
+
+```typescript
+validateNationalId("A123456789"); // Auto-detect format
+validateNationalId("A123456789", "old"); // Explicitly check old format
+validateNationalId("AA23456786", "new"); // Explicitly check new format
+```
+
+### `validateBusinessNumber(number: string): ValidationResult`
+
+Validates Taiwan Business Uniform Number (統一編號).
+
+- **Format**: 8 digits with checksum validation
+
+```typescript
+validateBusinessNumber("12345676");
+```
+
+### `validateResidentCertificate(id: string, format?: 'old' | 'new'): ValidationResult`
+
+Validates Taiwan Resident Certificate (居留證號).
+
+- **Old format**: 1 letter (A-D) + 9 digits starting with 8 or 9
+- **New format**: 2 letters + 8 digits
+
+```typescript
+validateResidentCertificate("A823456783"); // Auto-detect format
+validateResidentCertificate("A823456783", "old"); // Old format
+validateResidentCertificate("AA23456786", "new"); // New format
+```
+
+### `validateMobilePhone(phone: string): ValidationResult`
+
+Validates Taiwan mobile phone number (手機號碼).
+
+- **Format**: 10 digits starting with 09
+
+```typescript
+validateMobilePhone("0912345678");
+validateMobilePhone("0912-345-678"); // Accepts separators
+```
+
+### `validateCitizenCertificate(certNumber: string): ValidationResult`
+
+Validates Taiwan Citizen Digital Certificate Number (自然人憑證).
+
+- **Format**: 2 uppercase letters + 14 digits
+
+```typescript
+validateCitizenCertificate("AB12345678901234");
+```
+
+### `validateEInvoiceMobileBarcode(barcode: string): ValidationResult`
+
+Validates Taiwan e-Invoice Mobile Barcode (電子發票手機條碼).
+
+- **Format**: `/` + 7 characters (A-Z, 0-9, +, -, .)
+
+```typescript
+validateEInvoiceMobileBarcode("/ABCD123");
+```
+
+### `validateEInvoiceDonationCode(code: string): ValidationResult`
+
+Validates Taiwan e-Invoice Donation Code (電子發票捐贈碼).
+
+- **Format**: 3-7 digits
+
+```typescript
+validateEInvoiceDonationCode("12345");
+```
+
+### Return Type
+
+All validation functions return a `ValidationResult` object:
+
+```typescript
+interface ValidationResult {
+  isValid: boolean;
+  message?: string; // Error message when isValid is false
+}
+```
+
+## Development
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/imgarylai/taiwan-validator.git
+cd taiwan-validator
+
+# Install dependencies
+npm install
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Build the package
+npm run build
+
+# Development mode (watch)
+npm run dev
+```
+
+### Available Scripts
+
+- `npm run build` - Build the package with tsup
+- `npm run dev` - Watch mode for development
+- `npm test` - Run tests
+- `npm run test:coverage` - Run tests with coverage
+- `npm run lint` - Lint the code
+- `npm run type-check` - Check types
+- `npm run docs` - Generate documentation
+- `npm run clean` - Clean build outputs
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes using conventional commits (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Gary Lai - [@imgarylai](https://github.com/imgarylai)
+
+## Acknowledgments
+
+This package implements the official validation algorithms for Taiwan identification numbers and codes.

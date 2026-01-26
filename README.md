@@ -1,313 +1,214 @@
-# TypeScript Package Starter
+# Taiwan Validator
 
-A modern, well-configured starter template for creating TypeScript npm packages. This template provides a solid foundation with best practices and essential tooling for TypeScript package development.
+一個完整的台灣身分證件與代碼驗證 TypeScript 套件。
 
-[![CI](https://github.com/imgarylai/ts-package-starter/actions/workflows/test.yml/badge.svg)](https://github.com/imgarylai/ts-package-starter/actions/workflows/test.yml)
+[![CI](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml/badge.svg)](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[繁體中文](README.zh-TW.md)
+[English](README.en.md)
 
-## Features
+## 功能特色
 
-- 📦 Modern build setup with [tsup](https://github.com/egoist/tsup)
-- 🔥 ESM and CommonJS support
-- 📘 TypeScript with strict mode
-- 🧪 Testing with Jest
-- 📊 Code coverage reporting
-- 📝 API documentation with TypeDoc
-- ✨ Code formatting with Prettier
-- 🚨 Linting with ESLint
-- 🔄 Continuous Integration with GitHub Actions
-- 📋 Conventional commits with commitlint
-- 🪝 Git hooks with husky
-- 🌲 Tree-shakeable exports
-- 📦 Optimized npm package exports
-- 🤖 Automated dependency updates with Renovate
+- ✅ 身分證字號驗證 - 支援新舊格式
+- ✅ 統一編號驗證
+- ✅ 居留證號驗證 - 支援新舊格式
+- ✅ 手機號碼驗證
+- ✅ 自然人憑證驗證
+- ✅ 電子發票手機條碼驗證
+- ✅ 電子發票捐贈碼驗證
+- 📘 完整的 TypeScript 型別定義
+- 🧪 完整測試覆蓋率
+- 📦 支援 ESM 和 CommonJS 且可 Tree-shaking
+- 🚀 零依賴
 
-## Requirements
-
-- Node.js >= 22.14.0
-- npm >= 10.0.0
-
-## Getting Started
-
-1. Use this template by clicking the "Use this template" button on GitHub
-   or clone it directly:
+## 安裝
 
 ```bash
-git clone https://github.com/imgarylai/ts-package-starter.git my-package
-cd my-package
+npm install taiwan-validator
 ```
 
-2. Update the package information:
-
-   - Modify `package.json` with your package name, description, author, etc.
-   - Update this README.md with your package's information
-   - Update the LICENSE file if needed
-
-3. Install dependencies:
-
-```bash
-npm install
-```
-
-4. Start developing:
-
-```bash
-npm run dev
-```
-
-## Example Usage
-
-This is an example of how your package could be used once you publish it. Update this section with your own package's usage:
+## 使用方式
 
 ```typescript
-// This is just a placeholder example - replace with your own package's usage
-import { YourFunction } from "your-package-name";
+import {
+  validateNationalId,
+  validateBusinessNumber,
+  validateResidentCertificate,
+  validateMobilePhone,
+  validateCitizenCertificate,
+  validateEInvoiceMobileBarcode,
+  validateEInvoiceDonationCode,
+} from "taiwan-validator";
 
-// Use your package
-const result = YourFunction();
+// 身分證字號
+validateNationalId("A123456789"); // { isValid: true }
+validateNationalId("AA23456786"); // { isValid: true } - 新式格式
+
+// 統一編號
+validateBusinessNumber("12345676"); // { isValid: true }
+
+// 居留證號
+validateResidentCertificate("A823456783"); // { isValid: true } - 舊式
+validateResidentCertificate("AA23456786"); // { isValid: true } - 新式
+
+// 手機號碼
+validateMobilePhone("0912345678"); // { isValid: true }
+validateMobilePhone("0912-345-678"); // { isValid: true } - 含分隔符號
+
+// 自然人憑證
+validateCitizenCertificate("AB12345678901234"); // { isValid: true }
+
+// 電子發票手機條碼
+validateEInvoiceMobileBarcode("/ABCD123"); // { isValid: true }
+
+// 電子發票捐贈碼
+validateEInvoiceDonationCode("12345"); // { isValid: true }
 ```
 
-## Development
+## API 文件
 
-### Setup
+### `validateNationalId(id: string, format?: 'old' | 'new'): ValidationResult`
 
-1. Clone the repository:
+驗證台灣身分證字號。
 
-```bash
-git clone https://github.com/imgarylai/ts-package-starter.git
-cd ts-package-starter
+- **舊式格式**：1 個英文字母 + 9 個數字（例如：`A123456789`）
+- **新式格式**：2 個英文字母 + 8 個數字（例如：`AA23456786`）
+
+```typescript
+validateNationalId("A123456789"); // 自動偵測格式
+validateNationalId("A123456789", "old"); // 明確指定舊式格式
+validateNationalId("AA23456786", "new"); // 明確指定新式格式
 ```
 
-2. Install dependencies:
+### `validateBusinessNumber(number: string): ValidationResult`
+
+驗證台灣統一編號。
+
+- **格式**：8 位數字，含檢查碼驗證
+
+```typescript
+validateBusinessNumber("12345676");
+```
+
+### `validateResidentCertificate(id: string, format?: 'old' | 'new'): ValidationResult`
+
+驗證台灣居留證號。
+
+- **舊式格式**：1 個英文字母（A-D）+ 9 個數字（第二位為 8 或 9）
+- **新式格式**：2 個英文字母 + 8 個數字
+
+```typescript
+validateResidentCertificate("A823456783"); // 自動偵測格式
+validateResidentCertificate("A823456783", "old"); // 舊式格式
+validateResidentCertificate("AA23456786", "new"); // 新式格式
+```
+
+### `validateMobilePhone(phone: string): ValidationResult`
+
+驗證台灣手機號碼。
+
+- **格式**：10 位數字，以 09 開頭
+
+```typescript
+validateMobilePhone("0912345678");
+validateMobilePhone("0912-345-678"); // 接受分隔符號
+```
+
+### `validateCitizenCertificate(certNumber: string): ValidationResult`
+
+驗證台灣自然人憑證號碼。
+
+- **格式**：2 個大寫英文字母 + 14 位數字
+
+```typescript
+validateCitizenCertificate("AB12345678901234");
+```
+
+### `validateEInvoiceMobileBarcode(barcode: string): ValidationResult`
+
+驗證台灣電子發票手機條碼。
+
+- **格式**：`/` + 7 個字元（A-Z、0-9、+、-、.）
+
+```typescript
+validateEInvoiceMobileBarcode("/ABCD123");
+```
+
+### `validateEInvoiceDonationCode(code: string): ValidationResult`
+
+驗證台灣電子發票捐贈碼。
+
+- **格式**：3-7 位數字
+
+```typescript
+validateEInvoiceDonationCode("12345");
+```
+
+### 回傳型別
+
+所有驗證函式都會回傳 `ValidationResult` 物件：
+
+```typescript
+interface ValidationResult {
+  isValid: boolean;
+  message?: string; // 當 isValid 為 false 時的錯誤訊息
+}
+```
+
+## 開發
+
+### 設定
 
 ```bash
+# 複製專案
+git clone https://github.com/imgarylai/taiwan-validator.git
+cd taiwan-validator
+
+# 安裝相依套件
 npm install
-```
 
-3. Start developing:
+# 執行測試
+npm test
 
-```bash
+# 執行測試並產生覆蓋率報告
+npm run test:coverage
+
+# 建置套件
+npm run build
+
+# 開發模式（監看）
 npm run dev
 ```
 
-### Available Scripts
+### 可用指令
 
-- `npm run build` - Build the package with tsup
-- `npm run dev` - Watch mode for development
-- `npm test` - Run tests
-- `npm run test:coverage` - Run tests with coverage
-- `npm run lint` - Lint the code
-- `npm run type-check` - Check types
-- `npm run docs` - Generate documentation
-- `npm run docs:watch` - Generate documentation in watch mode
-- `npm run clean` - Clean build outputs
-- `npm run prepare` - Install git hooks
+- `npm run build` - 使用 tsup 建置套件
+- `npm run dev` - 開發模式（監看）
+- `npm test` - 執行測試
+- `npm run test:coverage` - 執行測試並產生覆蓋率報告
+- `npm run lint` - 程式碼檢查
+- `npm run type-check` - 型別檢查
+- `npm run docs` - 產生文件
+- `npm run clean` - 清除建置輸出
 
-### Project Structure
+## 貢獻
 
-```
-.
-├── src/               # Source code
-│   ├── index.ts      # Main entry point
-│   └── index.test.ts # Tests
-├── .github/          # GitHub configuration
-├── .husky/           # Git hooks
-├── dist/             # Built files (generated)
-├── docs/             # Generated documentation
-├── coverage/         # Test coverage reports
-└── node_modules/     # Dependencies
-```
+歡迎貢獻！請隨時提交 Pull Request。
 
-## Development Workflow
+1. Fork 此專案
+2. 建立你的功能分支 (`git checkout -b feature/amazing-feature`)
+3. 使用 conventional commits 提交你的變更 (`git commit -m 'feat: add amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 開啟一個 Pull Request
 
-1. Write your code in the `src` directory
-2. Write tests in `*.test.ts` files
-3. Run tests with `npm test`
-4. Build your package with `npm run build`
+## 授權
 
-## Publishing
+本專案使用 MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案。
 
-This package uses semantic-release for automated publishing based on conventional commit messages. The process is fully automated and will:
-
-- Determine the next version number based on commit messages
-- Generate release notes
-- Update the CHANGELOG.md
-- Create a GitHub release
-- Publish to npm
-
-### How it Works
-
-The release process is triggered by commits to the main branch. The version bump is determined by your commit messages:
-
-- `fix: ...` - Patch release (1.0.0 → 1.0.1)
-- `feat: ...` - Minor release (1.0.0 → 1.1.0)
-- `BREAKING CHANGE: ...` in commit body - Major release (1.0.0 → 2.0.0)
-- `feat!: ...` - Major release with breaking change (1.0.0 → 2.0.0)
-
-Examples:
-
-```bash
-# Patch release
-git commit -m "fix: correct network timeout issue"
-
-# Minor release
-git commit -m "feat: add new API endpoint"
-
-# Major release
-git commit -m "feat!: redesign public API
-BREAKING CHANGE: The entire public API has been redesigned"
-```
-
-### Setup Requirements
-
-To enable automated publishing, you need to:
-
-1. Create an npm account if you don't have one
-2. Create an npm access token:
-
-   - Go to npmjs.com and log in
-   - Click on your profile picture → "Access Tokens"
-   - Click "Generate New Token" (select "Automation" type)
-   - Copy the token
-
-3. Add the npm token to your GitHub repository:
-   - Go to your GitHub repository settings
-   - Click on "Secrets and variables" → "Actions"
-   - Click "New repository secret"
-   - Name: `NPM_TOKEN`
-   - Value: Your npm access token
-   - Click "Add secret"
-
-### Development Workflow
-
-1. Write your code and commit using conventional commit messages
-2. Push to the main branch
-3. semantic-release will automatically:
-   - Analyze commit messages
-   - Bump version
-   - Generate changelog
-   - Create GitHub release
-   - Publish to npm
-
-> Note: Only commits to the main branch trigger releases. When working on features, use feature branches and pull requests.
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes using conventional commits (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Commit Convention
-
-This project uses [Conventional Commits](https://www.conventionalcommits.org/). Examples:
-
-- `feat: add new feature`
-- `fix: resolve bug issue`
-- `docs: update README`
-- `chore: update dependencies`
-
-## Building
-
-The project uses tsup for building, which provides:
-
-- Multiple format outputs (ESM, CommonJS)
-- TypeScript declaration files
-- Source maps
-- Tree shaking
-- Minification
-
-## Documentation
-
-This project uses TypeDoc for generating API documentation. The documentation is automatically built and deployed to GitHub Pages on every push to the main branch.
-
-### Local Documentation
-
-To generate documentation locally:
-
-```bash
-# Generate documentation
-npm run docs
-
-# Watch mode for documentation
-npm run docs:watch
-```
-
-The documentation will be generated in the `docs` directory.
-
-### Online Documentation
-
-The documentation is automatically deployed to GitHub Pages at:
-[https://imgarylai.github.io/ts-package-starter](https://imgarylai.github.io/ts-package-starter)
-
-Features of the documentation:
-
-- Full API reference
-- Type information
-- Search functionality
-- Version information
-- Integration with README
-- Examples and usage
-
-### GitHub Pages Setup
-
-To set up GitHub Pages for your documentation:
-
-1. Go to your GitHub repository settings
-2. Navigate to "Pages" under "Code and automation"
-3. Under "Build and deployment":
-   - Source: Select "GitHub Actions"
-   - Branch: Leave as default (gh-pages will be created automatically)
-
-The documentation will be automatically built and deployed when:
-
-- You push to the main branch
-- The GitHub Actions workflow completes successfully
-
-You can also manually trigger the documentation build:
-
-1. Go to the "Actions" tab in your repository
-2. Select the "Documentation" workflow
-3. Click "Run workflow"
-
-### Documentation Configuration
-
-The documentation is configured in `typedoc.json`. Key features:
-
-- Excludes private and protected members
-- Includes version information
-- Validates links and exports
-- Uses the default theme
-- Integrates with the README
-
-## Dependency Management
-
-This project uses [Renovate](https://docs.renovatebot.com/) for automated dependency updates. The configuration includes:
-
-- Automatic merging of minor and patch updates
-- Dependencies are updated every weekend
-- Updates are automatically rebased
-- Non-major dependencies are grouped together
-- Node.js version updates are disabled (managed manually)
-
-The Renovate bot will automatically create pull requests for dependency updates according to this schedule and configuration. This helps keep your dependencies up-to-date while minimizing maintenance overhead.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author
+## 作者
 
 Gary Lai - [@imgarylai](https://github.com/imgarylai)
 
-## Acknowledgments
+## 致謝
 
-- [tsup](https://github.com/egoist/tsup) for the amazing build tool
-- [TypeScript](https://www.typescriptlang.org/) for the type system
-- [Jest](https://jestjs.io/) for testing
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io/) for code formatting
-- [Husky](https://typicode.github.io/husky/) for git hooks
+本套件實作了台灣官方的身分證件與代碼驗證演算法。

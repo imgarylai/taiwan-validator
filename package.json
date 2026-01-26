@@ -1,16 +1,16 @@
 {
-  "name": "ts-package-starter",
-  "version": "2.0.0",
-  "description": "A modern TypeScript package starter template with best practices",
+  "name": "taiwan-validator",
+  "version": "0.1.0",
+  "description": "A comprehensive validator for Taiwan identification numbers and codes (身分證字號、統一編號、居留證號、手機號碼、自然人憑證、電子發票條碼)",
   "license": "MIT",
   "author": "Gary Lai <garylai1990@gmail.com>",
-  "homepage": "https://github.com/imgarylai/ts-package-starter#readme",
+  "homepage": "https://github.com/imgarylai/taiwan-validator#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imgarylai/ts-package-starter.git"
+    "url": "git+https://github.com/imgarylai/taiwan-validator.git"
   },
   "bugs": {
-    "url": "https://github.com/imgarylai/ts-package-starter/issues"
+    "url": "https://github.com/imgarylai/taiwan-validator/issues"
   },
   "type": "module",
   "exports": {
@@ -74,10 +74,25 @@
     "typescript": "5.9.3"
   },
   "keywords": [
-    "package",
-    "starter",
-    "template",
-    "typescript"
+    "business-number",
+    "citizen-certificate",
+    "einvoice",
+    "id",
+    "identification",
+    "mobile-phone",
+    "national-id",
+    "resident-certificate",
+    "taiwan",
+    "validation",
+    "validator",
+    "台灣",
+    "居留證",
+    "手機",
+    "統一編號",
+    "自然人憑證",
+    "身分證",
+    "電子發票",
+    "驗證"
   ],
   "engines": {
     "node": ">=22.0.0",
