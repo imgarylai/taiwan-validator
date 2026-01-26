@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/imgarylai/taiwan-validator/compare/v1.0.0...v1.1.0) (2026-01-26)
+
+### Features
+
+- add Taiwan license plate number validation ([b3203be](https://github.com/imgarylai/taiwan-validator/commit/b3203be3c544bf1ecf8677c81eb6493e1452ccf5))
+
 # 1.0.0 (2026-01-26)
 
 ### Bug Fixes
