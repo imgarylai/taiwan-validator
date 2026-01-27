@@ -3,6 +3,7 @@
 A comprehensive TypeScript validator for Taiwan, supporting identification numbers, business codes, license plates, and more.
 
 [![CI](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml/badge.svg)](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/imgarylai/taiwan-validator/branch/main/graph/badge.svg)](https://codecov.io/gh/imgarylai/taiwan-validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [繁體中文](README.md)

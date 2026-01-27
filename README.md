@@ -3,6 +3,7 @@
 一個完整的台灣身分驗證 TypeScript 套件，支援身分證件、營業代碼、車牌號碼等多種格式驗證。
 
 [![CI](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml/badge.svg)](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/imgarylai/taiwan-validator/branch/main/graph/badge.svg)](https://codecov.io/gh/imgarylai/taiwan-validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [English](README.en.md)
