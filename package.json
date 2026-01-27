@@ -1,7 +1,7 @@
 {
   "name": "taiwan-validator",
   "version": "1.1.0",
-  "description": "A comprehensive validator for Taiwan identification numbers and codes (身分證字號、統一編號、居留證號、手機號碼、自然人憑證、電子發票條碼)",
+  "description": "A comprehensive validator for Taiwan identification numbers and codes (身分證字號、統一編號、居留證號、手機號碼、自然人憑證、電子發票條碼、車牌號碼)",
   "license": "MIT",
   "author": "Gary Lai <garylai1990@gmail.com>",
   "homepage": "https://github.com/imgarylai/taiwan-validator#readme",
