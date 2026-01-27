@@ -1,6 +1,6 @@
 # Taiwan Validator
 
-一個完整的台灣身分證件與代碼驗證 TypeScript 套件。
+一個完整的台灣身分驗證 TypeScript 套件，支援身分證件、營業代碼、車牌號碼等多種格式驗證。
 
 [![CI](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml/badge.svg)](https://github.com/imgarylai/taiwan-validator/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
