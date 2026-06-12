@@ -94,10 +94,37 @@ describe("validateResidentCertificate", () => {
     });
 
     test("should return isValid: false for invalid resident certificates", () => {
-      const parsed = parseResidentCertificate("A823456780");
-      expect(parsed.isValid).toBe(false);
-      expect(parsed.format).toBeUndefined();
-      expect(parsed.message).toBe("無效的新式居留證號");
+      const parsed1 = parseResidentCertificate("A823456780");
+      expect(parsed1.isValid).toBe(false);
+      expect(parsed1.format).toBeUndefined();
+      expect(parsed1.message).toBe("無效的新式居留證號");
+
+      const parsed2 = parseResidentCertificate("AB12345678");
+      expect(parsed2.isValid).toBe(false);
+      expect(parsed2.format).toBeUndefined();
+      expect(parsed2.message).toBe("無效的舊式居留證號");
+    });
+
+    test("should parse female new format Resident Certificates", () => {
+      const parsed = parseResidentCertificate("B923456786");
+      expect(parsed.isValid).toBe(true);
+      expect(parsed.format).toBe("new");
+      expect(parsed.gender).toBe("female");
+    });
+
+    test("should return isValid: false for empty, non-string, or invalid formatted inputs", () => {
+      const parsed1 = parseResidentCertificate("");
+      expect(parsed1.isValid).toBe(false);
+      expect(parsed1.message).toBe("居留證號必須為非空字串");
+
+      // @ts-expect-error Testing invalid input type
+      expect(parseResidentCertificate(null).isValid).toBe(false);
+      // @ts-expect-error Testing invalid input type
+      expect(parseResidentCertificate(undefined).isValid).toBe(false);
+
+      const parsed2 = parseResidentCertificate("12345678");
+      expect(parsed2.isValid).toBe(false);
+      expect(parsed2.message).toBe("無效的居留證號格式");
     });
   });
 

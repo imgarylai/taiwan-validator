@@ -47,6 +47,17 @@ describe("validateNationalId", () => {
       expect(parsed.region).toBeUndefined();
       expect(parsed.message).toBe("無效的身分證字號");
     });
+
+    test("should return isValid: false for empty or non-string inputs", () => {
+      const parsed1 = parseNationalId("");
+      expect(parsed1.isValid).toBe(false);
+      expect(parsed1.message).toBe("身分證字號必須為非空字串");
+
+      // @ts-expect-error Testing invalid input type
+      expect(parseNationalId(null).isValid).toBe(false);
+      // @ts-expect-error Testing invalid input type
+      expect(parseNationalId(undefined).isValid).toBe(false);
+    });
   });
 
   describe("Edge Cases", () => {
