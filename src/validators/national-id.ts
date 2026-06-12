@@ -36,7 +36,7 @@ function validateFormatAndChecksum(id: string): boolean {
 /**
  * 驗證台灣身分證字號（身分證字號皆為「1個字母 + 9個數字」格式）
  * @param id - 要驗證的身分證字號
- * @param format - 可選（為維持相容性保留）：指定格式類型
+ * @param _format - 可選（為維持相容性保留）：指定格式類型
  * @returns 驗證結果
  *
  * @example
