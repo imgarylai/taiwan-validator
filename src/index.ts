@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * Taiwan Validator - 台灣驗證器
  * 提供完整的台灣身分證件和代碼驗證功能，包括：
  * - 身分證字號 (含資訊解析)
