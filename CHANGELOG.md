@@ -1,3 +1,9 @@
+# [1.2.0](https://github.com/imgarylai/taiwan-validator/compare/v1.1.0...v1.2.0) (2026-06-12)
+
+### Features
+
+- **validators:** fix national-id and resident-certificate, add metadata parsers, and add new validators (invoice, landline, postal, nhi, passport) ([c5a8f9b](https://github.com/imgarylai/taiwan-validator/commit/c5a8f9bf8b26e3aae58d1a85753c3167830db38f))
+
 # [1.1.0](https://github.com/imgarylai/taiwan-validator/compare/v1.0.0...v1.1.0) (2026-01-26)
 
 ### Features
