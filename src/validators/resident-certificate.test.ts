@@ -1,101 +1,62 @@
-import { validateResidentCertificate } from "./resident-certificate";
+import { validateResidentCertificate, parseResidentCertificate } from "./resident-certificate";
 
 describe("validateResidentCertificate", () => {
-  describe("Old Format", () => {
-    test("should validate correct old format Resident Certificates", () => {
-      // These are example format IDs (not real person IDs)
-      expect(validateResidentCertificate("A823456783", "old").isValid).toBe(
-        true,
-      );
-      expect(validateResidentCertificate("B923456786", "old").isValid).toBe(
-        true,
-      );
-      expect(validateResidentCertificate("C823456785", "old").isValid).toBe(
-        true,
-      );
-      expect(validateResidentCertificate("D923456788", "old").isValid).toBe(
-        true,
-      );
-    });
-
-    test("should reject invalid old format Resident Certificates", () => {
-      expect(validateResidentCertificate("A823456780", "old").isValid).toBe(
-        false,
-      ); // Wrong checksum
-      expect(validateResidentCertificate("E823456783", "old").isValid).toBe(
-        false,
-      ); // Invalid first letter
-      expect(validateResidentCertificate("A723456783", "old").isValid).toBe(
-        false,
-      ); // Invalid second digit (must be 8 or 9)
-    });
-
-    test("should handle case insensitive input", () => {
-      expect(validateResidentCertificate("a823456783", "old").isValid).toBe(
-        true,
-      );
-      expect(validateResidentCertificate("b923456786", "old").isValid).toBe(
-        true,
-      );
-    });
-
-    test("should handle whitespace", () => {
-      expect(validateResidentCertificate(" A823456783 ", "old").isValid).toBe(
-        true,
-      );
-    });
-  });
-
-  describe("New Format", () => {
+  describe("New Format (1 letter + 9 digits, e.g. A823456783)", () => {
     test("should validate correct new format Resident Certificates", () => {
-      // These are example format IDs (not real person IDs)
-      expect(validateResidentCertificate("AA23456786", "new").isValid).toBe(
-        true,
-      );
-      expect(validateResidentCertificate("AB23456789", "new").isValid).toBe(
-        true,
-      );
+      expect(validateResidentCertificate("A823456783", "new").isValid).toBe(true);
+      expect(validateResidentCertificate("B923456786", "new").isValid).toBe(true);
     });
 
     test("should reject invalid new format Resident Certificates", () => {
-      expect(validateResidentCertificate("AA23456780", "new").isValid).toBe(
-        false,
-      ); // Wrong checksum
-      expect(validateResidentCertificate("AA2345678", "new").isValid).toBe(
-        false,
-      ); // Too short
+      expect(validateResidentCertificate("A823456780", "new").isValid).toBe(false); // Wrong checksum
+      expect(validateResidentCertificate("E723456783", "new").isValid).toBe(false); // Invalid second digit (must be 8 or 9)
     });
 
     test("should handle case insensitive input", () => {
-      expect(validateResidentCertificate("aa23456786", "new").isValid).toBe(
-        true,
-      );
+      expect(validateResidentCertificate("a823456783", "new").isValid).toBe(true);
+      expect(validateResidentCertificate("b923456786", "new").isValid).toBe(true);
     });
 
     test("should handle whitespace", () => {
-      expect(validateResidentCertificate(" AB23456789 ", "new").isValid).toBe(
-        true,
-      );
+      expect(validateResidentCertificate(" A823456783 ", "new").isValid).toBe(true);
+    });
+  });
+
+  describe("Old Format (2 letters + 8 digits, e.g. AB12345677)", () => {
+    test("should validate correct old format Resident Certificates", () => {
+      expect(validateResidentCertificate("AB12345677", "old").isValid).toBe(true); // Female non-citizen
+      expect(validateResidentCertificate("AC12345679", "old").isValid).toBe(true); // Male foreigner
+      expect(validateResidentCertificate("AD12345671", "old").isValid).toBe(true); // Female foreigner
+      expect(validateResidentCertificate("AA12345675", "old").isValid).toBe(true); // Male non-citizen
+    });
+
+    test("should reject invalid old format Resident Certificates", () => {
+      expect(validateResidentCertificate("AB12345678", "old").isValid).toBe(false); // Wrong checksum
+      expect(validateResidentCertificate("AE12345678", "old").isValid).toBe(false); // Invalid second letter (must be A-D)
+    });
+
+    test("should handle case insensitive input", () => {
+      expect(validateResidentCertificate("ab12345677", "old").isValid).toBe(true);
     });
   });
 
   describe("Auto-detect Format", () => {
     test("should auto-detect and validate old format", () => {
-      expect(validateResidentCertificate("A823456783").isValid).toBe(true);
+      expect(validateResidentCertificate("AB12345677").isValid).toBe(true);
     });
 
     test("should auto-detect and reject invalid old format", () => {
-      const result = validateResidentCertificate("A823456780");
+      const result = validateResidentCertificate("AB12345678");
       expect(result.isValid).toBe(false);
       expect(result.message).toBe("無效的舊式居留證號");
     });
 
     test("should auto-detect and validate new format", () => {
-      expect(validateResidentCertificate("AA23456786").isValid).toBe(true);
+      expect(validateResidentCertificate("A823456783").isValid).toBe(true);
     });
 
     test("should auto-detect and reject invalid new format", () => {
-      const result = validateResidentCertificate("AA23456780");
+      const result = validateResidentCertificate("A823456780");
       expect(result.isValid).toBe(false);
       expect(result.message).toBe("無效的新式居留證號");
     });
@@ -103,6 +64,40 @@ describe("validateResidentCertificate", () => {
     test("should reject completely invalid formats", () => {
       expect(validateResidentCertificate("12345678").isValid).toBe(false);
       expect(validateResidentCertificate("ABCDEFGH").isValid).toBe(false);
+    });
+  });
+
+  describe("Parser (parseResidentCertificate)", () => {
+    test("should parse new format Resident Certificates", () => {
+      const parsed = parseResidentCertificate("A823456783");
+      expect(parsed.isValid).toBe(true);
+      expect(parsed.format).toBe("new");
+      expect(parsed.gender).toBe("male");
+      expect(parsed.region).toBe("臺北市");
+      expect(parsed.identityType).toBe("foreigner");
+    });
+
+    test("should parse old format Resident Certificates", () => {
+      const parsed1 = parseResidentCertificate("AB12345677");
+      expect(parsed1.isValid).toBe(true);
+      expect(parsed1.format).toBe("old");
+      expect(parsed1.gender).toBe("female");
+      expect(parsed1.region).toBe("臺北市");
+      expect(parsed1.identityType).toBe("non-citizen");
+
+      const parsed2 = parseResidentCertificate("AC12345679");
+      expect(parsed2.isValid).toBe(true);
+      expect(parsed2.format).toBe("old");
+      expect(parsed2.gender).toBe("male");
+      expect(parsed2.region).toBe("臺北市");
+      expect(parsed2.identityType).toBe("foreigner");
+    });
+
+    test("should return isValid: false for invalid resident certificates", () => {
+      const parsed = parseResidentCertificate("A823456780");
+      expect(parsed.isValid).toBe(false);
+      expect(parsed.format).toBeUndefined();
+      expect(parsed.message).toBe("無效的新式居留證號");
     });
   });
 
@@ -117,7 +112,7 @@ describe("validateResidentCertificate", () => {
     });
 
     test("should provide meaningful error messages", () => {
-      const result1 = validateResidentCertificate("A823456780", "old");
+      const result1 = validateResidentCertificate("A823456780", "new");
       expect(result1.isValid).toBe(false);
       expect(result1.message).toBeDefined();
 
