@@ -6,7 +6,7 @@
   "excludeProtected": true,
   "excludeExternals": true,
   "theme": "default",
-  "name": "ts-package-starter",
+  "name": "taiwan-validator",
   "readme": "README.md",
   "includeVersion": true,
   "gitRevision": "main",
