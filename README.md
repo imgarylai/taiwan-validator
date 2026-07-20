@@ -55,7 +55,7 @@ import {
 
 // 身分證字號
 validateNationalId("A123456789"); // { isValid: true }
-parseNationalId("A123456789");    // { isValid: true, gender: 'male', region: '臺北市' }
+parseNationalId("A123456789"); // { isValid: true, gender: 'male', region: '臺北市' }
 
 // 統一編號 與 統一發票號碼
 validateBusinessNumber("12345676"); // { isValid: true }
@@ -63,10 +63,10 @@ validateUniformInvoice("AB-12345678"); // { isValid: true }
 
 // 居留證號
 validateResidentCertificate("A823456783"); // { isValid: true } - 新式
-parseResidentCertificate("AB12345677");    // { isValid: true, format: 'old', gender: 'female', region: '臺北市', identityType: 'non-citizen' }
+parseResidentCertificate("AB12345677"); // { isValid: true, format: 'old', gender: 'female', region: '臺北市', identityType: 'non-citizen' }
 
 // 手機與市話
-validateMobilePhone("0912-345-678");   // { isValid: true }
+validateMobilePhone("0912-345-678"); // { isValid: true }
 validateLandlinePhone("(02) 1234-5678"); // { isValid: true }
 
 // 郵遞區號
@@ -274,11 +274,7 @@ interface ValidationResult {
 ```typescript
 interface LicensePlateValidationResult extends ValidationResult {
   plateType?:
-    | "car"
-    | "car-old"
-    | "electric-car"
-    | "motorcycle-small"
-    | "motorcycle";
+    "car" | "car-old" | "electric-car" | "motorcycle-small" | "motorcycle";
 }
 ```
 
@@ -291,32 +287,32 @@ interface LicensePlateValidationResult extends ValidationResult {
 git clone https://github.com/imgarylai/taiwan-validator.git
 cd taiwan-validator
 
-# 安裝相依套件
-npm install
+# 安裝相依套件（本專案使用 pnpm >= 10）
+pnpm install
 
 # 執行測試
-npm test
+pnpm test
 
 # 執行測試並產生覆蓋率報告
-npm run test:coverage
+pnpm run test:coverage
 
 # 建置套件
-npm run build
+pnpm run build
 
 # 開發模式（監看）
-npm run dev
+pnpm run dev
 ```
 
 ### 可用指令
 
-- `npm run build` - 使用 tsup 建置套件
-- `npm run dev` - 開發模式（監看）
-- `npm test` - 執行測試
-- `npm run test:coverage` - 執行測試並產生覆蓋率報告
-- `npm run lint` - 程式碼檢查
-- `npm run type-check` - 型別檢查
-- `npm run docs` - 產生文件
-- `npm run clean` - 清除建置輸出
+- `pnpm run build` - 使用 tsup 建置套件
+- `pnpm run dev` - 開發模式（監看）
+- `pnpm test` - 執行測試
+- `pnpm run test:coverage` - 執行測試並產生覆蓋率報告
+- `pnpm run lint` - 程式碼檢查
+- `pnpm run type-check` - 型別檢查
+- `pnpm run docs` - 產生文件
+- `pnpm run clean` - 清除建置輸出
 
 ## 貢獻
 

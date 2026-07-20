@@ -55,7 +55,7 @@ import {
 
 // National ID
 validateNationalId("A123456789"); // { isValid: true }
-parseNationalId("A123456789");    // { isValid: true, gender: 'male', region: '臺北市' }
+parseNationalId("A123456789"); // { isValid: true, gender: 'male', region: '臺北市' }
 
 // Business Number & Uniform Invoice
 validateBusinessNumber("12345676"); // { isValid: true }
@@ -63,10 +63,10 @@ validateUniformInvoice("AB-12345678"); // { isValid: true }
 
 // Resident Certificate (ARC)
 validateResidentCertificate("A823456783"); // { isValid: true } - New format
-parseResidentCertificate("AB12345677");    // { isValid: true, format: 'old', gender: 'female', region: '臺北市', identityType: 'non-citizen' }
+parseResidentCertificate("AB12345677"); // { isValid: true, format: 'old', gender: 'female', region: '臺北市', identityType: 'non-citizen' }
 
 // Mobile & Landline Phone
-validateMobilePhone("0912-345-678");   // { isValid: true }
+validateMobilePhone("0912-345-678"); // { isValid: true }
 validateLandlinePhone("(02) 1234-5678"); // { isValid: true }
 
 // Postal Code
@@ -274,11 +274,7 @@ License plate validation returns a `LicensePlateValidationResult` with additiona
 ```typescript
 interface LicensePlateValidationResult extends ValidationResult {
   plateType?:
-    | "car"
-    | "car-old"
-    | "electric-car"
-    | "motorcycle-small"
-    | "motorcycle";
+    "car" | "car-old" | "electric-car" | "motorcycle-small" | "motorcycle";
 }
 ```
 
@@ -291,32 +287,32 @@ interface LicensePlateValidationResult extends ValidationResult {
 git clone https://github.com/imgarylai/taiwan-validator.git
 cd taiwan-validator
 
-# Install dependencies
-npm install
+# Install dependencies (this project uses pnpm >= 10)
+pnpm install
 
 # Run tests
-npm test
+pnpm test
 
 # Run tests with coverage
-npm run test:coverage
+pnpm run test:coverage
 
 # Build the package
-npm run build
+pnpm run build
 
 # Development mode (watch)
-npm run dev
+pnpm run dev
 ```
 
 ### Available Scripts
 
-- `npm run build` - Build the package with tsup
-- `npm run dev` - Watch mode for development
-- `npm test` - Run tests
-- `npm run test:coverage` - Run tests with coverage
-- `npm run lint` - Lint the code
-- `npm run type-check` - Check types
-- `npm run docs` - Generate documentation
-- `npm run clean` - Clean build outputs
+- `pnpm run build` - Build the package with tsup
+- `pnpm run dev` - Watch mode for development
+- `pnpm test` - Run tests
+- `pnpm run test:coverage` - Run tests with coverage
+- `pnpm run lint` - Lint the code
+- `pnpm run type-check` - Check types
+- `pnpm run docs` - Generate documentation
+- `pnpm run clean` - Clean build outputs
 
 ## Contributing
 

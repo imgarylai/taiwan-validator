@@ -32,7 +32,7 @@
     "docs": "typedoc",
     "docs:watch": "typedoc --watch",
     "lint": "eslint .",
-    "prepack": "npm run build",
+    "prepack": "pnpm run build",
     "prepare": "husky",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -99,7 +99,7 @@
   ],
   "engines": {
     "node": ">=22.0.0",
-    "npm": ">=10.0.0"
+    "pnpm": ">=10"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -116,6 +116,7 @@
       "prettier-package-json --write"
     ]
   },
+  "packageManager": "pnpm@10.34.5",
   "release": {
     "branches": [
       "main"

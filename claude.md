@@ -185,19 +185,21 @@ interface ValidationResult {
 
 執行測試：
 
+本專案使用 **pnpm**（>= 10），版本透過 `packageManager` 欄位由 Corepack 鎖定。
+
 ```bash
-npm test                # 執行所有測試
-npm run test:coverage   # 執行測試並產生覆蓋率報告
+pnpm test                # 執行所有測試
+pnpm run test:coverage   # 執行測試並產生覆蓋率報告
 ```
 
 ## 開發工作流程
 
-1. **安裝相依套件**：`npm install`
-2. **開發模式**：`npm run dev`（監看模式）
-3. **執行測試**：`npm test`
-4. **型別檢查**：`npm run type-check`
-5. **程式碼檢查**：`npm run lint`
-6. **建置套件**：`npm run build`
+1. **安裝相依套件**：`pnpm install`
+2. **開發模式**：`pnpm run dev`（監看模式）
+3. **執行測試**：`pnpm test`
+4. **型別檢查**：`pnpm run type-check`
+5. **程式碼檢查**：`pnpm run lint`
+6. **建置套件**：`pnpm run build`
 
 ## 套件發布
 
