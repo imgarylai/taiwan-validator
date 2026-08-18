@@ -8,6 +8,8 @@
 
 [English](README.en.md)
 
+**[線上 Demo](https://laigary.com/labs/taiwan-validator)** — 輸入任何號碼，十三種檢查一次跑完。
+
 ## 功能特色
 
 - ✅ 身分證字號驗證與解析 (性別、發證地區)

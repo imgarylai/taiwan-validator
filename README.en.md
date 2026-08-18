@@ -8,6 +8,8 @@ A comprehensive TypeScript validator for Taiwan, supporting identification numbe
 
 [繁體中文](README.md)
 
+**[Live demo](https://laigary.com/labs/taiwan-validator)** — type any number and see which of the thirteen checks it satisfies.
+
 ## Features
 
 - ✅ National ID validation and information extraction (gender, region)
